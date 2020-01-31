@@ -20,9 +20,8 @@ class ExcelValidator
         $this->extension = ucfirst(pathinfo($files, PATHINFO_EXTENSION));
         $reader = IOFactory::createReader($this->extension);
         $reader->setReadDataOnly(true);
+        $reader->setReadEmptyCells(false);
         $this->spreadsheet = $reader->load($files);
-
-        // $this->validate();
     }
 
     public function validate($file_type = 'A', $sheet = 0)
@@ -96,7 +95,7 @@ class ExcelValidator
     {
         $this->setHeader();
 
-        return $headerOrder == $this->header;
+        return $headerOrder === $this->header;
     }
 
     private function setHeader()
@@ -127,7 +126,7 @@ class ExcelValidator
         echo "</table>";
     }
 
-    public function displayOncli()
+    public function displayOnCli()
     {
         $table = new CliTable();
         $table->setTableColor('blue');
