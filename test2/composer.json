@@ -1,0 +1,24 @@
+{
+  "name": "zulkifli-r/excel-validator",
+  "description": "PHP package to validate excel file format and it's data",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Muh Zulkifli R",
+      "email": "muh.zul.r@gmail.com"
+    }
+  ],
+  "require": {
+    "phpoffice/phpspreadsheet": "^1.10",
+    "jc21/clitable": "^1.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "ZulkifliR\\": "src/"
+    },
+    "files": [
+      "helpers.php"
+    ]
+  }
+}
