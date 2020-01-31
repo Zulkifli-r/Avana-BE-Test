@@ -3,7 +3,7 @@
 if (!function_exists('file_type')) {
     function file_type($value)
     {
-        return include './src/Type_' . $value . '.php';
+        return include './file_types/Type_' . $value . '.php';
     }
 }
 
