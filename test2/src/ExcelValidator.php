@@ -9,6 +9,8 @@ use jc21\CliTable;
 class ExcelValidator
 {
     public $spreadsheet;
+    public $allowed_extension = ['xlsx', 'xls'];
+
     private $sheet;
     private $extension;
     private $errors;
@@ -29,12 +31,17 @@ class ExcelValidator
         $this->config = file_type($file_type);
         $this->sheet = $this->spreadsheet->getSheet($sheet);
 
+        if ($this->validateFileExtension() == false) {
+            $this->errors[0][] = 'Sorry we only accept ' . implode(', ', $this->allowed_extension) . ' file extenstion';
+            return false;
+        }
+
         if ($this->validateColumnSize($this->config['columns_size']) == false) {
             $this->errors[0][] = 'Maximum column size for Type ' . $file_type . ' is ' . $this->config['columns_size'];
             return false;
         }
         if ($this->validateHeader($this->config['columns_header']) == false) {
-            $this->errors[0][] = 'Type ' . $file_type . ' header must follow the following name and order : ' . implode(', ', $this->config['columns_header']);
+            $this->errors[0][] = 'Type ' . $file_type . ' header must follow the following name and order : ' . implode(' | ', $this->config['columns_header']);
             return false;
         }
 
@@ -140,5 +147,10 @@ class ExcelValidator
         }
         $table->injectData($errors);
         $table->display();
+    }
+
+    private function validateFileExtension()
+    {
+        return in_array(strtolower($this->extension), $this->allowed_extension);
     }
 }
